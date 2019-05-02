@@ -879,7 +879,7 @@ func parsePath(ctx context.Context, rctx *fasthttp.RequestCtx) (context.Context,
 	}
 
 	if err != nil {
-		return ctx, newError(404, err.Error(), msgInvalidURL)
+		return ctx, newError(404, err.Error(), err.Error())
 	}
 
 	ctx = context.WithValue(ctx, imageURLCtxKey, imageURL)
