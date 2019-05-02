@@ -154,7 +154,8 @@ var (
 	errInvalidImageURL                    = errors.New("Invalid image url")
 	errInvalidURLEncoding                 = errors.New("Invalid url encoding")
 	errResultingImageFormatIsNotSupported = errors.New("Resulting image format is not supported")
-	errInvalidPath                        = newError(404, "Invalid path", msgInvalidURL)
+	errInvalidPath6                       = newError(404, "Invalid path", "Invalid URL 6")
+	errInvalidPath3                       = newError(404, "Invalid path", "Invalid URL 3")
 )
 
 func (it imageType) String() string {
@@ -807,7 +808,7 @@ func parsePathBasic(parts []string, headers *processingHeaders) (string, *proces
 	var err error
 
 	if len(parts) < 6 {
-		return "", nil, errInvalidPath
+		return "", nil, errInvalidPath6
 	}
 
 	po, err := defaultProcessingOptions(headers)
@@ -852,7 +853,7 @@ func parsePath(ctx context.Context, rctx *fasthttp.RequestCtx) (context.Context,
 	parts := strings.Split(strings.TrimPrefix(path, "/"), "/")
 
 	if len(parts) < 3 {
-		return ctx, errInvalidPath
+		return ctx, errInvalidPath3
 	}
 
 	if !conf.AllowInsecure {
