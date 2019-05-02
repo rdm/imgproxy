@@ -151,7 +151,6 @@ const (
 )
 
 var (
-	errInvalidImageURL                    = errors.New("Invalid image url")
 	errInvalidURLEncoding                 = errors.New("Invalid url encoding")
 	errResultingImageFormatIsNotSupported = errors.New("Resulting image format is not supported")
 	errInvalidPath6                       = newError(404, "Invalid path", "Invalid URL 6")
@@ -238,7 +237,7 @@ func decodeBase64URL(parts []string) (string, string, error) {
 	fullURL := fmt.Sprintf("%s%s", conf.BaseURL, imageURL)
 
 	if _, err := url.ParseRequestURI(fullURL); err != nil {
-		return "", "", errInvalidImageURL
+		return "", "", errors.New("Invalid image url decodeBase64URL")
 	}
 
 	return fullURL, format, nil
@@ -264,7 +263,7 @@ func decodePlainURL(parts []string) (string, string, error) {
 		}
 	}
 
-	return "", "", errInvalidImageURL
+	return "", "", errors.New("Invalid image url decodePlainURL")
 }
 
 func decodeURL(parts []string) (string, string, error) {
