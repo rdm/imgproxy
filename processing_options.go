@@ -231,13 +231,13 @@ func decodeBase64URL(parts []string) (string, string, error) {
 
 	imageURL, err := base64.RawURLEncoding.DecodeString(strings.TrimRight(urlParts[0], "="))
 	if err != nil {
-		return "", "", errInvalidURLEncoding
+		return "", "", err
 	}
 
 	fullURL := fmt.Sprintf("%s%s", conf.BaseURL, imageURL)
 
 	if _, err := url.ParseRequestURI(fullURL); err != nil {
-		return "", "", errors.New("Invalid image url decodeBase64URL")
+		return "", "", err
 	}
 
 	return fullURL, format, nil
