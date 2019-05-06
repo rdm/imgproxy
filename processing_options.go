@@ -241,7 +241,7 @@ func decodeBase64URL(parts []string) (string, string, error) {
                             
         if _, err := url.ParseRequestURI(fullURL); err != nil {
                 fmt.Printf("errInvalidImageURL %s\n", err.Error())
-                return "", "", errInvalidImageURL
+                return "", "", err
         }                             
                               
         return fullURL, format, nil
