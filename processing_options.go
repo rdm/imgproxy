@@ -271,6 +271,8 @@ func decodePlainURL(parts []string) (string, string, error) {
 }
 
 func decodeURL(parts []string) (string, string, error) {
+	fmt.Printf("decodeURL: %s\n", strings.Join(parts, ""))
+	fmt.Printf("decodeURL/: %s\n", strings.Join(parts, "/"))
 	if len(parts) == 0 {
 		return "", "", errInvalidURLEncoding
 	}
@@ -782,6 +784,8 @@ func defaultProcessingOptions(headers *processingHeaders) (*processingOptions, e
 }
 
 func parsePathAdvanced(parts []string, headers *processingHeaders) (string, *processingOptions, error) {
+	fmt.Printf("parsePathAdvanced: %s\n", strings.Join(parts, ""))
+	fmt.Printf("parsePathAdvanced/: %s\n", strings.Join(parts, "/"))
 	po, err := defaultProcessingOptions(headers)
 	if err != nil {
 		return "", po, err
@@ -853,6 +857,7 @@ func parsePathBasic(parts []string, headers *processingHeaders) (string, *proces
 
 func parsePath(ctx context.Context, rctx *fasthttp.RequestCtx) (context.Context, error) {
 	path := string(rctx.Request.URI().PathOriginal())
+	fmt.Printf("parsePath: %s\n", path)
 	parts := strings.Split(strings.TrimPrefix(path, "/"), "/")
 
 	if len(parts) < 3 {
