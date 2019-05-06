@@ -217,30 +217,34 @@ func colorFromHex(hexcolor string) (rgbColor, error) {
 }
 
 func decodeBase64URL(parts []string) (string, string, error) {
-	var format string
+        var format string
+                                     
+        urlParts := strings.Split(strings.Join(parts, ""), ".")
 
-	urlParts := strings.Split(strings.Join(parts, ""), ".")
+        if len(urlParts) > 2 {     
+                return "", "", errInvalidURLEncoding
+        }         
 
-	if len(urlParts) > 2 {
-		return "", "", errInvalidURLEncoding
-	}
-
-	if len(urlParts) == 2 && len(urlParts[1]) > 0 {
-		format = urlParts[1]
-	}
-
-	imageURL, err := base64.RawURLEncoding.DecodeString(strings.TrimRight(urlParts[0], "="))
-	if err != nil {
-		return "", "", err
-	}
-
-	fullURL := fmt.Sprintf("%s%s", conf.BaseURL, imageURL)
-
-	if _, err := url.ParseRequestURI(fullURL); err != nil {
-		return "", "", err
-	}
-
-	return fullURL, format, nil
+        if len(urlParts) == 2 && len(urlParts[1]) > 0 {
+                format = urlParts[1]           
+                fmt.Printf("format: %s\n", format)
+        }                                  
+                                            
+        imageURL, err := base64.RawURLEncoding.DecodeString(strings.TrimRight(urlParts[0], "="))
+        if err != nil {                    
+                return "", "", errInvalidURLEncoding
+        }
+        fmt.Printf("imageURL: %s\n", imageURL)
+                               
+        fullURL := fmt.Sprintf("%s%s", conf.BaseURL, imageURL)
+        fmt.Printf("fullURL: %s\n", fullURL)
+                            
+        if _, err := url.ParseRequestURI(fullURL); err != nil {
+                fmt.Printf("errInvalidImageURL %s\n", err.Error())
+                return "", "", errInvalidImageURL
+        }                             
+                              
+        return fullURL, format, nil
 }
 
 func decodePlainURL(parts []string) (string, string, error) {
