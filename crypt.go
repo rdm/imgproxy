@@ -5,6 +5,7 @@ import (
 	"crypto/sha256"
 	"encoding/base64"
 	"errors"
+	"fmt"
 )
 
 var (
@@ -19,8 +20,10 @@ func validatePath(signature, path string) error {
 	if err != nil {
 		return errInvalidSignatureEncoding
 	}
+	fmt.Printf("messageMAC: %s\n", messageMAC);
 
 	for i := 0; i < len(conf.Keys); i++ {
+		fmt.Printf("i: %d, conf.Key[i]: %s\n", i, conf.Keys[i]);
 		if hmac.Equal(messageMAC, signatureFor(path, i)) {
 			return nil
 		}
