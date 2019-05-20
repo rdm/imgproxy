@@ -54,6 +54,7 @@ func hexEnvConfig(b *[]securityKey, name string) {
 			if keys[i], err = hex.DecodeString(part); err != nil {
 				logFatal("%s expected to be hex-encoded strings. Invalid: %s\n", name, part)
 			}
+			fmt.Printf("hexEnvConfig (%s) [%d]: %s\n", name, i, part)
 		}
 
 		*b = keys
