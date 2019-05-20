@@ -269,6 +269,7 @@ func (h *httpHandler) ServeHTTP(rctx *fasthttp.RequestCtx) {
 	}
 
 	if !checkSecret(rctx) {
+		fmt.Printf("invalid secret\n");
 		panic(errInvalidSecret)
 	}
 

@@ -218,32 +218,32 @@ func colorFromHex(hexcolor string) (rgbColor, error) {
 
 func decodeBase64URL(parts []string) (string, string, error) {
         var format string
-                                     
+
         urlParts := strings.Split(strings.Join(parts, ""), ".")
 
-        if len(urlParts) > 2 {     
+        if len(urlParts) > 2 {
                 return "", "", errInvalidURLEncoding
-        }         
+        }
 
         if len(urlParts) == 2 && len(urlParts[1]) > 0 {
-                format = urlParts[1]           
+                format = urlParts[1]
                 fmt.Printf("format: %s\n", format)
-        }                                  
-                                            
+        }
+
         imageURL, err := base64.RawURLEncoding.DecodeString(strings.TrimRight(urlParts[0], "="))
-        if err != nil {                    
+        if err != nil {
                 return "", "", errInvalidURLEncoding
         }
         fmt.Printf("imageURL: %s\n", imageURL)
-                               
+
         fullURL := fmt.Sprintf("%s%s", conf.BaseURL, imageURL)
         fmt.Printf("fullURL: %s\n", fullURL)
-                            
+
         if _, err := url.ParseRequestURI(fullURL); err != nil {
                 fmt.Printf("errInvalidImageURL %s\n", err.Error())
                 return "", "", err
-        }                             
-                              
+        }
+
         return fullURL, format, nil
 }
 
@@ -866,6 +866,7 @@ func parsePath(ctx context.Context, rctx *fasthttp.RequestCtx) (context.Context,
 
 	if !conf.AllowInsecure {
 		if err := validatePath(parts[0], strings.TrimPrefix(path, fmt.Sprintf("/%s", parts[0]))); err != nil {
+			fmt.Printf("invalidPath: %s\n", err.Error());
 			return ctx, newError(403, err.Error(), msgForbidden)
 		}
 	}
