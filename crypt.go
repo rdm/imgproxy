@@ -42,7 +42,7 @@ func signatureFor(str string, pairInd int) []byte {
 	fmt.Printf("str: %d: %s\n", len(str), str)
 	mac.Write([]byte(str))
 	expectedMAC := mac.Sum(nil)
-	fmt.Printf("expectedMAC: %d -- %s\n", len(expectedMAC), expectedMAC)
+	fmt.Printf("expectedMAC: %d -- %s\n", len(expectedMAC), hex.EncodeToString(expectedMAC))
 	fmt.Printf("conf.SignatureSize: %d\n", conf.SignatureSize);
 	if conf.SignatureSize < 32 {
 		return expectedMAC[:conf.SignatureSize]
